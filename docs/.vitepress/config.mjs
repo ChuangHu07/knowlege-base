@@ -8,8 +8,9 @@ export default defineConfig({
     nav: [
       { text: '首页', link: '/' },
       { text: '编程', link: '/code/index' },
-      { text: '读书笔记', link: '/books/index' },
-      { text: '其他', link: '/others/index' },
+      { text: '玄学', link: '/daoism/index' },
+      { text: '吉他', link: '/Guitar/index' },
+      { text: '其他', link: '/others/index'}
     ],
 
     sidebar: {
@@ -24,12 +25,23 @@ export default defineConfig({
           ]
         }
       ],
-      '/books/': [
+      '/daoism/': [
         {
-          text: '读书笔记',
+          text: '玄学',
           collapsed: false,
           items: [
-            { text: '目录', link: '/books/index' },
+            { text: '目录', link: '/daoism/index' },
+            { text: '奇门遁甲', link: '/daoism/qimen/index' },
+            { text: '六爻', link: '/daoism/liuyao/index' },
+          ]
+        }
+      ],
+      '/guitar/': [
+        {
+          text: '吉他',
+          collapsed: false,
+          items: [
+            { text: '目录', link: '/guitar/index' },
           ]
         }
       ],
