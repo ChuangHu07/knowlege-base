@@ -4,7 +4,7 @@ layout: home
 hero:
   name: "Asher的知识库"
   text: "记录所学，持续成长"
-  tagline: 编程 · 读书 · 思考
+  tagline: 编程 · 玄学 · 吉他
   actions:
     - theme: brand
       text: 开始阅读
