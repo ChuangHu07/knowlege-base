@@ -17,9 +17,12 @@ features:
   - icon: 💻
     title: 编程笔记
     details: JavaScript、Python 等编程语言的学习记录与实践总结
-  - icon: 📚
-    title: 读书笔记
-    details: 记录读过的书，摘录精华，写下感悟
+  - icon: ☯️
+    title: 玄学
+    details: 奇门遁甲、六爻等传统文化学习记录
+  - icon: 🎸
+    title: 吉他
+    details: 吉他学习笔记与练习记录
   - icon: 🗂️
     title: 其他
     details: 工具使用、思维方法、生活感悟等零散记录

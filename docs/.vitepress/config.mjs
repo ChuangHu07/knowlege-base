@@ -9,7 +9,7 @@ export default defineConfig({
       { text: '首页', link: '/' },
       { text: '编程', link: '/code/index' },
       { text: '玄学', link: '/daoism/index' },
-      { text: '吉他', link: '/Guitar/index' },
+      { text: '吉他', link: '/guitar/index' },
       { text: '其他', link: '/others/index'}
     ],
 
