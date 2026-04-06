@@ -1,7 +1,6 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  base: '/knowlege-base/',
   title: "Asher的知识库",
   description: "记录Asher所学",
   themeConfig: {
