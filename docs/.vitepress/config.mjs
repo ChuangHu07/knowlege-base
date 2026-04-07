@@ -19,7 +19,6 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: '目录', link: '/code/index' },
-            { text: 'Computer Architecture', link: '/code/Architecture' },
             { text: 'Python', link: '/code/python' },
             {
               text: '计算机组成原理',
