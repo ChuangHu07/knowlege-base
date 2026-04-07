@@ -21,12 +21,11 @@ export default defineConfig({
             { text: '目录', link: '/code/index' },
             { text: 'Python', link: '/code/python' },
             {
-              text: '计算机组成原理',
+              text: 'Computer Architecture',
               collapsed: true,
               items: [
                 { text: '目录', link: '/code/computer-architecture/index' },
                 { text: '基本概念', link: '/code/computer-architecture/basic' },
-                { text: 'CPU结构', link: '/code/computer-architecture/cpu' },
               ]
             }
           ]
