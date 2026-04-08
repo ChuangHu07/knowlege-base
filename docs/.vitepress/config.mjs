@@ -19,7 +19,6 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: '目录', link: '/code/index' },
-            { text: 'Python', link: '/code/python' },
             {
               text: 'Computer Architecture',
               collapsed: true,
@@ -37,7 +36,20 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: '目录', link: '/daoism/index' },
-            { text: '奇门遁甲', link: '/daoism/qimen/index' },
+            {
+              text: '奇门遁甲',
+              collapsed: true,
+              items: [
+                { text: '目录', link: '/daoism/qimen/index' },
+                {
+                  text: '案例',
+                  collapsed: true,
+                  items: [
+                    { text: '舅舅问11年佳女健康', link: '/daoism/qimen/examples/舅舅问11年佳女健康' },
+                  ]
+                }
+              ]
+            },
             { text: '六爻', link: '/daoism/liuyao/index' },
           ]
         }
