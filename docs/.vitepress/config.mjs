@@ -45,7 +45,7 @@ export default defineConfig({
                   text: '案例',
                   collapsed: true,
                   items: [
-                    { text: '舅舅问11年佳女健康', link: '/daoism/qimen/examples/舅舅问11年佳女健康' },
+                    { text: '舅舅问11年佳女健康', link: '/daoism/qimen/examples/jiujiu-question' },
                   ]
                 }
               ]

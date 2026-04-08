@@ -116,7 +116,7 @@
   |  腾蛇 天英 癸 杜门 庚  |                      |   玄武 天蓬 壬 开门 丙    |
   |  太阴 天辅 己 伤门 丁  | 六合 天冲 庚 生门 壬 | 白虎 空马 天任 丁 休门 乙 |
 
-![image-20260407222614295](C:\Users\1\AppData\Roaming\Typora\typora-user-images\image-20260407222614295.png)
+![image-20260407222614295](docs\public\image\image-20260407222614295.png)
 
 ## 解盘思路
 
