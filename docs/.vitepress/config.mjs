@@ -4,6 +4,9 @@ export default defineConfig({
   title: "Asher的知识库",
   description: "记录Asher所学",
   themeConfig: {
+    outline: {
+      level: [2, 3],  // 加这一行，显示二级和三级标题
+    },
     nav: [
       { text: '首页', link: '/' },
       { text: '编程', link: '/code/index' },
