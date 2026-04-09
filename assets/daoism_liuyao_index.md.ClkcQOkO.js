@@ -1,0 +1,1 @@
+import{_ as e,o as a,c as t}from"./chunks/framework.DXGyWiRo.js";const _=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"daoism/liuyao/index.md","filePath":"daoism/liuyao/index.md"}'),o={name:"daoism/liuyao/index.md"};function i(n,s,r,d,c,m){return a(),t("div")}const l=e(o,[["render",i]]);export{_ as __pageData,l as default};
