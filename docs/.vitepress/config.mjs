@@ -50,7 +50,12 @@ export default defineConfig({
                 }
               ]
             },
-            { text: '六爻', link: '/daoism/liuyao/index' },
+            { text: '六爻', link: '/daoism/liuyao/index', 
+              collapsed: true,
+              items: [
+                {text: '六爻取数', link: '/daoism/liuyao/points/SelectANumber'}
+              ]
+            },
           ]
         }
       ],
