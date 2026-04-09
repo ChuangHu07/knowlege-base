@@ -23,7 +23,7 @@
 **例题**： 下图有一个加法器(5ns)和一个MUX(5ns)串联。时钟能跑多快？
 → 关键路径 = 5 + 5 = 10ns → 最高频率 = **100 MHz**（不是200MHz！）
 
-![CA Critical Path](/images/CA Critical Path.png)
+![CA Critical Path](<CA Critical Path.png>)
 
 Critical Path:木桶效应——整个电路的速度由**最慢路径**决定，而不是最快路径。
 
