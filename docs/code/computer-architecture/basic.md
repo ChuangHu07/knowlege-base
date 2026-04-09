@@ -1,32 +1,171 @@
----
-title: Homwork4
-date: 2026-04-07
----
+# Computer Architecture
 
-# 基本概念
+## Processor Review
 
-## 什么是计算机组成原理
+### Clocking Review
 
-连接VPN
-ssh CHH429@thompson.cs.pitt.edu
-git clone https://github.com/wonsunahn/CS2410_Spring2026
-cd CS2410_Spring2026/resources/cache_experiments/
+- Logic components 
+  1. Not gate 取反
+  2. And gate 全1才1
+  3. OR gate 有1就1 
+  4. XOR gate 不同才1
 
-遇到了两个问题
-1. make: *** [Makefile:91: outputs/array.bin.100.ipc] Error 2
-rm linked-list_nodata.o array_nodata.o array.o linked-list.o array_optimized.o linked-list_optimized.o
-outputs/ 目录不存在
-原因： Makefile 试图把 perf 的输出结果写入 outputs/ 文件夹，但这个文件夹没有被自动创建。
-解决方法：
-mkdir -p outputs
-mkdir 是创建目录的命令，-p 的意思是"如果父目录不存在也一并创建，且不报错"。
-2. perf_ctl 文件已存在
-错误信息：
-mkfifo: cannot create fifo 'perf_ctl': File exists
-原因： 第一次 make 失败时，perf_ctl 这个临时文件已经被创建了但没有被清理掉。第二次运行 make 时试图重新创建它，就冲突了。
-解决方法：
-make clean
+**MUX（多路选择器）**：两条路通向同一个点，MUX是"门卫"，由控制信号决定放哪条路。
+**Decoder（译码器）**：输入N位 → 激活 2ᴺ 条输出线中的1条。就像"收银台号码显示屏"，输入哪个号，那个灯亮。
+**ALU**：算术逻辑单元，接收两个32位操作数，由ALUOp控制做 加/减/与/或/比较 等操作。
 
-## 冯诺依曼结构
+### The clock signal && Critical Path
 
-...
+时钟就像心跳：**上升沿**触发寄存器"锁存"数据，两次上升沿之间，数据在组合逻辑中传播。
+
+关键规则：时钟周期 ≥ 电路中最长传播延迟（关键路径）
+
+**例题：**下图有一个加法器(5ns)和一个MUX(5ns)串联。时钟能跑多快？
+→ 关键路径 = 5 + 5 = 10ns → 最高频率 = **100 MHz**（不是200MHz！）
+
+![CA Critical Path](C:\Users\1\Desktop\my-knowledge-base\docs\public\images\CA Critical Path.png)
+
+Critical Path:木桶效应——整个电路的速度由**最慢路径**决定，而不是最快路径。
+
+> **关键路径决定时钟上限** 很多人以为时钟频率由"平均延迟"决定，其实是由**最慢那条路径**决定的。木桶效应，一条慢路径拖累整个CPU。
+
+
+
+### MIPS Review
+
+|             RISC 精简指令集             |             CISC 复杂指令集             |
+| :-------------------------------------: | :-------------------------------------: |
+| **比喻**：乐高积木 — 每块简单，组合无限 | **比喻**：瑞士军刀 — 专用工具，功能强大 |
+|         ✅ 固定32位长度，易并行          |              ✅ 代码密度高               |
+|              ✅ 便于流水线               |      ✅ 专用指令效率高（如矩阵乘法       |
+|              ✅ 编译器友好               |         ❌ 指令长度可变，难并行          |
+|   ❌ 代码量大（需更多指令完成复杂任务    |               ❌ 解码复杂                |
+|       **代表**：MIPS、ARM、RISC-V       |    **代表**：x86（先拆成µops再执行）    |
+
+🏆 谁赢了？以及为什么
+
+通用计算：**RISC 胜出**（约1980年代）。原因三点：
+
+1. **摩尔定律**：内存变便宜，代码密度不再是瓶颈
+2. **流水线并行**：RISC固定长度指令更容易同时处理多条
+3. **编译器崛起**：没人再手写汇编，专用指令失去优势
+
+
+但 CISC **没有死**！GPU的向量指令、TPU的矩阵乘法指令、NPU的激活函数——这些**专用加速器**本质上都是CISC思想的延续。
+
+### Single cycle CPU
+
+🖥 五阶段执行流程
+
+每条指令依次经过：
+
+**IF** 取指 → **ID** 译码 → **EX** 执行(ALU) → **MEM** 访存 → **WB** 写回
+
+
+
+📦 MIPS 三种指令格式（全32位）
+
+**R格式**（寄存器型）：op(6) | rs(5) | rt(5) | rd(5) | shamt(5) | funct(6)
+→ 用于：add、sub、and、or、slt
+
+**I格式**（立即数型）：op(6) | rs(5) | rt(5) | immediate(16)
+→ 用于：lw、sw、beq、addi
+
+**J格式**（跳转型）：op(6) | jump target(26)
+→ 用于：j
+
+助记：R=寄存器, I=立即数, J=跳转
+
+
+
+🗂 关键寄存器速查
+
+| 寄存器  | 编号  | 用途                   |
+| :------ | :---- | :--------------------- |
+| $zero   | 0     | 永远是0（只读）        |
+| $v0-$v1 | 2-3   | 函数返回值             |
+| $a0-$a3 | 4-7   | 函数参数               |
+| $t0-$t9 | 8-25  | 临时变量（可被覆盖）   |
+| $s0-$s7 | 16-23 | 保存变量（调用后保留） |
+| $sp     | 29    | 栈指针                 |
+| $ra     | 31    | 返回地址               |
+
+
+
+💾 内存与加载/存储
+
+MIPS是**Load-Store架构**：所有运算只能在寄存器之间做，要读写内存必须用 lw/sw。
+
+`lw $t0, 8($s4)` → 把地址*($s4+8)*处的数据读入$t0
+`sw $t0, 12($s4)` → 把$t0的值写入地址*($s4+12)*
+
+注意：sw中 $t0 是**源**，不是目的地！内存地址 = 基址寄存器 + 偏移量
+
+
+
+
+
+### Mini MIPS
+
+
+
+|  控制信号  | 作用                | 当前值 |
+| :--------: | ------------------- | ------ |
+|  RegWrite  | 允许写寄存器        |        |
+| RegDataSrc | 写入来源（ALU/MEM） |        |
+|   ALUSrc   | ALU第二操作数来源   |        |
+|   ALUOp    | ALU执行的操作       |        |
+|  MemWrite  | 允许写内存          |        |
+|   PCSrc    | 下一PC来源          |        |
+
+1. `add t0, t3, s0`
+
+   RegWrite( ✅ enable) ->  ALUSrc(来自寄存器) -> ALUOp(add) -> PCSrc (PC + 4（顺序执行）)
+
+![CA2add](C:\Users\1\Desktop\my-knowledge-base\docs\public\images\CA2add.png)
+
+2. `lw s4, 12(s0)`
+
+   RegWrite( ✅ enable) ->  ALUSrc(来自立即数(12)) -> ALUOp(add（地址计算）) -> PCSrc (PC + 4（顺序执行）)
+
+   ![CS2lw](C:\Users\1\Desktop\my-knowledge-base\docs\public\images\CS2lw.png)
+
+ 3. `sw t3, 8(sp)`
+
+    ALUSrc(来自立即数(8)) -> ALUOp(add（地址计算）) ->MemWrite(✅ enable) -> PCSrc (PC + 4（顺序执行）)
+
+![CS2sw](C:\Users\1\Desktop\my-knowledge-base\docs\public\images\CS2sw.png)
+
+4. `beq t0, t1, loop`
+
+   ALUSrc(来自寄存器) -> ALUOp(sub（作差比较）) -> PCSrc (结果=0 → PC+4+imm；否则 → PC+4)
+
+![CS2beq](C:\Users\1\Desktop\my-knowledge-base\docs\public\images\CS2beq.png)
+
+###  Multi-cycle CPU
+
+| 指令 | 阶段数 | 原因                                           |
+| ---- | ------ | ---------------------------------------------- |
+| lw   | **5**  | IF → ID → EX → **MEM**（读内存）→ WB           |
+| add  | **4**  | IF → ID → EX → WB（**跳过MEM**）               |
+| sw   | **4**  | IF → ID → EX → MEM（**跳过WB**，不用写寄存器） |
+
+lw 看起来像4步，是因为 WB 阶段"回头"用了 Register File，而 Register File 在图上只画了一个框。但它在时间上确实是第5个独立的阶段。
+
+🚀 为什么单周期不够好？
+
+单周期的致命缺陷：周期时间 = **最慢指令**的延迟（即 lw 的5个阶段）。
+哪怕 add 只需要4个阶段，也得等5ns。如果99%的指令是 add，平均执行时间仍是5ns，毫无改善。（时钟信号是一个物理振荡器，它不认识指令，不知道当前在跑 lw 还是 add，它只会**机械地、匀速地**发出节拍。）
+
+解决方案：多周期——每条指令跑**自己需要的周期数**，用锁存器在阶段间保存中间结果。
+
+📊 性能计算示例
+
+若每阶段1ns，lw=1%，add=99%：
+
+**单周期**：全部按5ns → 平均 = **5.00 ns**
+**多周期**：lw×5ns + add×4ns = 0.01×5 + 0.99×4 = **4.01 ns**
+
+提升约 20%！这正是"让每条指令按需付费"的好处。
+
+但还可以更好！ 多周期中，当一条指令在EX阶段时，IF/ID/MEM/WB都在**空转**。 这正是流水线(Pipeline)要解决的问题。
